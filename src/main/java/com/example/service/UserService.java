@@ -15,4 +15,6 @@ public interface UserService {
 
 	User findOneWithBlogs(String name);
 
+	void delete(int id);
+
 }

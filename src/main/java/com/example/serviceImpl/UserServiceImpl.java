@@ -87,4 +87,10 @@ public class UserServiceImpl implements UserService {
 		return findOneWithBlogs(user.getId());
 	}
 
+	@Override
+	public void delete(int id) {
+		userDao.delete(id);
+		
+	}
+
 }

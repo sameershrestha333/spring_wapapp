@@ -5,6 +5,10 @@
 
 <div class="container">
 	<h2>User Detail Info</h2>
+
+	<c:if test="${param.success eq true }">
+		<div class="alert alert-success">Blog Remove Successfully !</div>
+	</c:if>
 	<h3>${user.name}</h3>
 
 	<!-- Button trigger modal -->
@@ -56,11 +60,16 @@
 	</form:form>
 	<br /> <br />
 	<script type="text/javascript">
-	$(document).ready(function(){
-		$('.nav-tabs a:first').tab('show'); // Select first tab
-	})
+		$(document).ready(function() {
+			$('.nav-tabs a:first').tab('show'); // Select first tab
+			$('.triggerRemove').click(function(e){
+				e.preventDefault();
+				$("#modelRemove .removeBtn").attr("href",$(this).attr("href"));
+				$("#modelRemove").modal();
+			});
+		})
 	</script>
-	
+
 	<!-- Nav tabs -->
 	<ul class="nav nav-tabs" role="tablist">
 
@@ -79,7 +88,14 @@
 
 			<div role="tabpanel" class="tab-pane" id="blog_${blog.id}">
 				<h4>${blog.name}</h4>
-				<h4>${blog.url}</h4>
+
+				<p>
+					<a href='<spring:url value="/blog/remove/${blog.id}"/>'
+						class="btn btn-sm btn-danger triggerRemove"> <span
+						class="glyphicon glyphicon-remove"> Remove blog</span>
+					</a> ${blog.url}
+				</p>
+
 				<div class="table-responsive">
 					<!-- 		<table class="table table-bordered table-hover table-striped"> -->
 					<table class="table table-hover table-bordered table-striped">
@@ -111,4 +127,27 @@
 		</c:forEach>
 	</div>
 
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modelRemove" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">Remove Blog</h4>
+			</div>
+			<div class="modal-body">
+				Are you sure to remove this blog?
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+			<a href="" class="btn btn-danger removeBtn">Remove</a>
+			</div>
+		</div>
+	</div>
 </div>
