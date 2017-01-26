@@ -10,6 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Email;
 
 @Entity
 public class User {
@@ -17,25 +20,25 @@ public class User {
 	@Id
 	@GeneratedValue
 	private Integer id;
+	@Size(min = 3, message = "{nameRequiredment}")
 
 	private String name;
 
+	@Email(message="{emailMsg}")
 	private String email;
+	@Size(min=5,message="{pwdMsg}")
 
 	private String password;
-	
+
 	private boolean enabled;
-	
+
 	@ManyToMany
 	@JoinTable
 	private List<Role> roles;
-	
-	@OneToMany(mappedBy="user",cascade=CascadeType.REMOVE)
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
 	private List<Blog> blogs;
 
-	
-	
-	
 	public boolean isEnabled() {
 		return enabled;
 	}
@@ -51,8 +54,6 @@ public class User {
 	public void setBlogs(List<Blog> blogs) {
 		this.blogs = blogs;
 	}
-
-
 
 	public List<Role> getRoles() {
 		return roles;
@@ -93,6 +94,5 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
 
 }

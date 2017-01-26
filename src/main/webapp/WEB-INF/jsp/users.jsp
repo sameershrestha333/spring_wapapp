@@ -36,7 +36,7 @@
 							<td><a href="<spring:url value='/users/${user.id}'/>">
 
 
-									${user.name} </a></td>
+								<c:out value="${user.name}"/> </a></td>
 							<td><a href='<spring:url value="/users/remove/${user.id}"/>'
 								class="btn  btn-danger pull-right triggerRemove"> <span
 									class="glyphicon glyphicon-remove"> Remove user</span>
