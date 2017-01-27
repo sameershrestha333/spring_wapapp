@@ -93,4 +93,9 @@ public class UserServiceImpl implements UserService {
 		
 	}
 
+	@Override
+	public User findOne(String username) {
+			return userDao.findByName(username);
+	}
+
 }

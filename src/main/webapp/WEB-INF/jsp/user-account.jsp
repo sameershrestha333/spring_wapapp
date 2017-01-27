@@ -14,7 +14,7 @@
 	<button type="button" class="btn btn-primary btn-lg"
 		data-toggle="modal" data-target="#myModal">New Blog</button>
 
-	<form:form modelAttribute="blog" class="form-horizontal">
+	<form:form modelAttribute="blog" class="form-horizontal blogForm">
 		<!-- Modal -->
 		<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 			aria-labelledby="myModalLabel">
@@ -72,6 +72,31 @@
 								$("#modelRemove .removeBtn").attr("href",
 										$(this).attr("href"));
 								$("#modelRemove").modal();
+							});
+
+					$(".blogForm").validate(
+							{
+
+								rules : {
+									name : {
+										required : true,
+										minlength : 3
+									},
+									url : {
+										required : true,
+										url : true
+									}
+								},
+								highlight : function(element) {
+									$(element).closest('.form-group')
+											.removeClass('has-success')
+											.addClass('has-error');
+								},
+								unhighlight : function(element) {
+									$(element).closest('.form-group')
+											.removeClass('has-error').addClass(
+													'has-success');
+								}
 							});
 				})
 	</script>

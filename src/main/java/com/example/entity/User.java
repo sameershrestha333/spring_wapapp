@@ -3,6 +3,7 @@ package com.example.entity;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -14,6 +15,8 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
 
+import com.example.annotation.UniqueUserName;
+
 @Entity
 public class User {
 
@@ -22,6 +25,7 @@ public class User {
 	private Integer id;
 	@Size(min = 3, message = "{nameRequiredment}")
 
+	@UniqueUserName(message="{duplicateUser}")
 	private String name;
 
 	@Email(message="{emailMsg}")

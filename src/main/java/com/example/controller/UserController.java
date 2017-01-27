@@ -23,47 +23,13 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private BlogService blogService;
-
-	@ModelAttribute("user")
-	public User construct() {
-		return new User();
-	}
 
 	@ModelAttribute("blog")
 	public Blog constructBlog() {
 		return new Blog();
-	}
-
-	@RequestMapping("/users")
-	public String users(Model model) {
-		// List<User> users=userService.findAll();
-		model.addAttribute("users", userService.findAll());
-		return "users";
-	}
-
-	@RequestMapping("/users/{id}")
-	public String userDetails(@PathVariable int id, Model model) {
-		model.addAttribute("user", userService.findOneWithBlogs(id));
-		return "user-detail";
-	}
-
-	@RequestMapping("/register")
-	public String register() {
-
-		return "user-register";
-	}
-
-	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String registerPost(@Valid @ModelAttribute("user") User user,BindingResult result) {
-		if(result.hasErrors()){
-			return "user-register";
-		}
-		
-		userService.save(user);
-		return "redirect:/register?success=true";
 	}
 
 	@RequestMapping("/account")
@@ -74,29 +40,24 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/account", method = RequestMethod.POST)
-	public String addBlogPost(@Valid @ModelAttribute("blog") Blog blog,BindingResult result ,Principal principal) {
+	public String addBlogPost(@Valid @ModelAttribute("blog") Blog blog, BindingResult result, Principal principal) {
 
-			if(result.hasErrors()){
-				return  "account";
-			}
-		String name=principal.getName();
-		blogService.save(blog,name);
+		if (result.hasErrors()) {
+			return "account";
+		}
+		String name = principal.getName();
+		blogService.save(blog, name);
 		return "redirect:/account";
 
 	}
-	
+
 	@RequestMapping("/blog/remove/{id}")
-	public String removeBlog(@PathVariable int id){
+	public String removeBlog(@PathVariable int id) {
 		Blog blog = blogService.findOne(id);
-		
+
 		blogService.delete(blog);
-		
+
 		return "redirect:/account?success=true";
 	}
 
-	@RequestMapping("/users/remove/{id}")
-	public String removeUser(@PathVariable int id){
-		userService.delete(id);
-		return "redirect:/users?success=true";
-	}
 }
